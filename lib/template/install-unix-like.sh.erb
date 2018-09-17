@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+APP_NAME="<%= @v.app_name %>"
+DIR=$(dirname $(realpath "$0"))
+
+# Chrome
+if [ "$(whoami)" = "root" ]; then
+  TARGET_DIR="<%= @v.target_path_system %>"
+else
+  TARGET_DIR="<%= @v.target_path_user %>"
+fi
+
+# create directory
+mkdir -p "$TARGET_DIR"
+
+# copy to manifest file to target dir
+cp "$DIR/manifest.json" "$TARGET_DIR/${APP_NAME}.json"
+
+# Update host path in the manifest.
+APP_PATH=$DIR/app.rb
+ESCAPED_APP_PATH=${APP_PATH////\\/}
+sed -i -e "s/APP_PATH/$ESCAPED_APP_PATH/" "$TARGET_DIR/$APP_NAME.json"
+
+# set permissions
+chmod o+r "$TARGET_DIR/${APP_NAME}.json"
+
+echo "[Chrome] Native messaging host $APP_NAME has been installed."

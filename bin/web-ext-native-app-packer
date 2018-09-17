@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+def print_help
+  puts "Usage: web-ext-native-app-packer $native_app_dir $output_dir"
+end
+
+if ARGV.length != 2
+  print_help
+  exit 1
+end
+
+dir = ENV['PWD']
+project_dir, output_dir = ARGV
+project_dir = File.expand_path(project_dir, dir)
+output_dir = File.expand_path(output_dir, dir)
+
+def exit_if_not_exist(filename)
+  unless File.exist? filename
+    puts "Error: #{filename} not exist."
+    exit 1
+  end
+end
+
+exit_if_not_exist(project_dir)
+exit_if_not_exist(output_dir)
+
+yaml_path = File.join(project_dir, 'pack.yaml')
+exit_if_not_exist(yaml_path)
+
+require 'yaml'
+require 'ostruct'
+require File.expand_path('../../lib/web-ext-native-app-packer', __FILE__)
+
+yaml = YAML.load_file(yaml_path)
+input = OpenStruct.new(yaml)
+input.project_dir = project_dir
+input.output_dir = output_dir
+
+WebExtNativeAppPacker.perform(input)

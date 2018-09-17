@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+APP_NAME="<%= @v.app_name %>"
+
+if [ "$(whoami)" = "root" ]; then
+  TARGET_DIR="<%= @v.target_path_system %>"
+else
+  TARGET_DIR="<%= @v.target_path_user %>"
+fi
+
+rm "$TARGET_DIR/${APP_NAME}.json"
+echo "Native messaging host $APP_NAME has been uninstalled."
