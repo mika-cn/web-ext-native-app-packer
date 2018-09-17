@@ -7,11 +7,12 @@ A tool to pack web extension native application.
 
 1. install gem
 ```shell
-gem install web-ext-native-app-packer
+ gem install web-ext-native-app-packer
 ```
 
 2. create pack.yaml in your native App directory
 ```yaml
+# pack.yaml
 app_name: 'awesome_app'
 app_description: 'description of awesome_app'
 app_path: 'main.rb'
