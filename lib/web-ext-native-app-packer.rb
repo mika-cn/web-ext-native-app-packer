@@ -120,6 +120,7 @@ module WebExtNativeAppPacker
         target_path = get_target_path(platform, browser_name)
         v = OpenStruct.new({
           app_name: input.app_name,
+          app_path: input.app_path,
           target_path_system: target_path[:system],
           target_path_user: target_path[:user]
         })
@@ -129,6 +130,9 @@ module WebExtNativeAppPacker
           filename
         )
         Helper.render(v, erb_path, out_path)
+        if out_path.end_with?('.sh')
+          `chmod a+x #{out_path}`
+        end
       end
     end
   end

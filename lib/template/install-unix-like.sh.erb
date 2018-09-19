@@ -17,7 +17,7 @@ mkdir -p "$TARGET_DIR"
 cp "$DIR/manifest.json" "$TARGET_DIR/${APP_NAME}.json"
 
 # Update host path in the manifest.
-APP_PATH=$DIR/app.rb
+APP_PATH=$DIR/<%= @v.app_path %>
 ESCAPED_APP_PATH=${APP_PATH////\\/}
 sed -i -e "s/APP_PATH/$ESCAPED_APP_PATH/" "$TARGET_DIR/$APP_NAME.json"
 
