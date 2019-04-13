@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+
+# `realpath` is not avariable on Mac OS
+function getpath(){
+  perl -MCwd -e 'print Cwd::abs_path shift' "$1"
+}
+
 APP_NAME="<%= @v.app_name %>"
-DIR=$(dirname $(realpath "$0"))
+DIR=$(dirname $(getpath "$0"))
 
 # Chrome
 if [ "$(whoami)" = "root" ]; then
